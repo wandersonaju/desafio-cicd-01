@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
         - name: reviewfilmes
-          image: us-east1-docker.pkg.dev/lab-los-app-prd/desafio-01/review-filmes
+          image: us-east1-docker.pkg.dev/lab-los-app-prd/desafio-01/review-filmes-web
           env:
           - name: ASPNETCORE_HTTP_PORTS
             value: "8080"
