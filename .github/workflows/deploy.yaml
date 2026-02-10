@@ -1,0 +1,26 @@
+name: Deploy no Kubernetes
+
+on:
+    workflow_call:
+
+jobs:
+    deploy:
+        name: "Deploy"
+        runs-on: ubuntu-Latest
+        steps:
+            - name: Obtendo o código
+              uses: actions/checkout@v4
+            
+            - name: Configurando o cluster no GKE
+              uses: azure/k8s-set-context@v4
+              with:
+                method: kubeconfig
+                kubeconfig: ${{ secrets.K8S_CONFIG }}
+            
+            - name: Deploy no Kubernetes
+              uses: Azure/k8s-deploy@v5
+              with:
+                manifests: |
+                    k8s/deployment.yaml
+                images: |
+                    ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}

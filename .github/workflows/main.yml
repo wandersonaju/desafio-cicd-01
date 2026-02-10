@@ -89,4 +89,8 @@ jobs:
         with:
           category: docker-result
           sarif_file: trivy-docker-result.sarif
-          
+      
+  deploy-homologacao:
+    needs: [release]
+    uses: wandersonaju/desafio-cicd-01/.github/workflows/deploy.yml@main
+    secrets: inherit
