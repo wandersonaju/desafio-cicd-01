@@ -11,11 +11,24 @@ jobs:
             - name: Obtendo o código
               uses: actions/checkout@v4
             
-            - name: Configurando o cluster no GKE
-              uses: azure/k8s-set-context@v4
+            # - name: Configurando o cluster no GKE
+            #   uses: azure/k8s-set-context@v4
+            #   with:
+            #     method: kubeconfig
+            #     kubeconfig: ${{ secrets.K8S_CONFIG }}
+
+            - name: Auth no Google Cloud
+              uses: google-github-actions/auth@v2
               with:
-                method: kubeconfig
-                kubeconfig: ${{ secrets.K8S_CONFIG }}
+                workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_ID }}
+                service_account: ${{ vars.SERVICE_ACCOUNT_ID }}
+
+            - name: Configurar acesso ao GKE
+              uses: google-github-actions/get-gke-credentials@v2
+              with:
+                cluster_name: ${{ vars.CLUSTER_NAME }}
+                location: ${{ vars.REGION }}
+                project_id: ${{ vars.PROJECT_ID }}
             
             - name: Deploy no Kubernetes
               uses: Azure/k8s-deploy@v5
