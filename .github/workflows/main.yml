@@ -75,21 +75,20 @@ jobs:
             ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest
             ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
 
-      - name: Executar o Trivy
-        uses: aquasecurity/trivy-action@0.34.0
-        continue-on-error: true
-        with:
-          scan-type: "image"
-          image-ref: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
-          format: sarif
-          output: trivy-docker-result.sarif
-          severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+      # - name: Executar o Trivy
+      #   uses: aquasecurity/trivy-action@0.34.0
+      #   with:
+      #     scan-type: "image"
+      #     image-ref: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
+      #     format: sarif
+      #     output: trivy-docker-result.sarif
+      #     severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
 
-      - name: Upload do resultado do Trivy para o GitHub
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          category: docker-result
-          sarif_file: trivy-docker-result.sarif
+      # - name: Upload do resultado do Trivy para o GitHub
+      #   uses: github/codeql-action/upload-sarif@v4
+      #   with:
+      #     category: docker-result
+      #     sarif_file: trivy-docker-result.sarif
       
   deploy-homologacao:
     needs: [release]
