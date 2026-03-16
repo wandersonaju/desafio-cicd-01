@@ -3,7 +3,7 @@ run-name: Pipeline CI/CD executada por ${{ github.actor }} em ${{ github.run_num
 
 on:
    workflow_dispatch:
-    
+
    push:
      branches:
      - main
@@ -77,7 +77,7 @@ jobs:
             ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
 
       - name: Executar o Trivy
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: "image"
           image-ref: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
