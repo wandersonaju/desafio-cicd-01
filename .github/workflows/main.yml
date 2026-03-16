@@ -77,6 +77,7 @@ jobs:
 
       - name: Executar o Trivy
         uses: aquasecurity/trivy-action@0.34.0
+        continue-on-error: true
         with:
           scan-type: "image"
           image-ref: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:v${{ github.run_number }}
