@@ -84,7 +84,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: homologacao.fabricioveronez.com
+  - host: homologacao.wfslab.com.br
     http:
       paths:
       - pathType: Prefix

@@ -2,11 +2,21 @@ name: Deploy no Kubernetes
 
 on:
     workflow_call:
+      inputs:
+        environment-name:
+          type: string
+          required: true
+        inputs.environment-url:
+          type: string
+          required: true
 
 jobs:
     deploy:
         name: "Deploy"
         runs-on: ubuntu-Latest
+        environment:
+          name: ${{ inputs.environment-name}}
+          url: ${{ inputs.environment-url}}
         steps:
             - name: Obtendo o código
               uses: actions/checkout@v4
@@ -29,10 +39,14 @@ jobs:
                 cluster_name: ${{ vars.CLUSTER_NAME }}
                 location: ${{ vars.REGION }}
                 project_id: ${{ vars.PROJECT_ID }}
+
+            - name: Update Deployment
+              run: "sed -i 's/host: homologacao.wfslab.com.br/host: ${{ vars.BASE_URL }}/g' k8s/deployment.yaml"
             
             - name: Deploy no Kubernetes
               uses: Azure/k8s-deploy@v5
               with:
+                namespace: ${{ secrets.K8S_NAMESPACE }}
                 manifests: |
                     k8s/deployment.yaml
                 images: |
