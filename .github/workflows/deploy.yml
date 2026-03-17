@@ -6,7 +6,7 @@ on:
         environment-name:
           type: string
           required: true
-        inputs.environment-url:
+        environment-url:
           type: string
           required: true
 
