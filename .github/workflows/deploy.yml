@@ -15,8 +15,8 @@ jobs:
         name: "Deploy"
         runs-on: ubuntu-Latest
         environment:
-          name: ${{ inputs.environment-name}}
-          url: ${{ inputs.environment-url}}
+          name: ${{ inputs.environment-name }}
+          url: ${{ inputs.environment-url }}
         steps:
             - name: Obtendo o código
               uses: actions/checkout@v4
