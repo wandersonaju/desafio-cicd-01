@@ -102,6 +102,8 @@ jobs:
     name: teste End to End
     runs-on: ubuntu-latest
     needs: [deploy-homologacao]
+    environment:
+      name: homologacao
     container:
       image: fabricioveronez/webdriver-dotnet:chrome
       env:
