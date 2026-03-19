@@ -96,7 +96,7 @@ jobs:
     secrets: inherit
     with:
       environment-name: homologacao
-      environment-url: http://homologacao.wfslab.com.br
+      environment-url: https://homologacao.wfslab.com.br
 
   teste-e2e:
     name: teste End to End
@@ -107,7 +107,7 @@ jobs:
     container:
       image: fabricioveronez/webdriver-dotnet:chrome
       env:
-        BASE_URL: "http://${{ vars.BASE_URL }}"
+        BASE_URL: "https://${{ vars.BASE_URL }}"
     steps:
       - name: Obtendo o código do projeto
         uses: actions/checkout@v4
@@ -116,9 +116,9 @@ jobs:
         run: dotnet test ./Review-Filmes.Test.EndToEnd/Review-Filmes.Test.EndToEnd.csproj
 
   deploy-producao:
-   needs: [deploy-homologacao]
+   needs: [teste-e2e]
    uses: wandersonaju/desafio-cicd-01/.github/workflows/deploy.yml@main
    secrets: inherit
    with:
      environment-name: producao
-     environment-url: http://producao.wfslab.com.br
+     environment-url: https://wfslab.com.br

@@ -40,8 +40,8 @@ jobs:
                 location: ${{ vars.REGION }}
                 project_id: ${{ vars.PROJECT_ID }}
 
-            - name: Update Deployment
-              run: "sed -i 's/host: homologacao.wfslab.com.br/host: ${{ vars.BASE_URL }}/g' k8s/deployment.yaml"
+            # - name: Update Deployment
+            #   run: "sed -i 's/host: homologacao.wfslab.com.br/host: ${{ vars.BASE_URL }}/g' k8s/deployment.yaml"
             
             - name: Deploy no Kubernetes
               uses: Azure/k8s-deploy@v5
