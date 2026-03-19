@@ -1,0 +1,43 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: cert-wfslab
+  namespace: homologacao
+spec:
+  domains:
+    - homologacao.wfslab.com.br
+    - www.homologacao.wfslab.com.br
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reviewfilmes
+  namespace: homologacao
+  labels:
+    name: reviewfilmes
+  annotations:
+     kubernetes.io/ingress.class: "gce"
+     networking.gke.io/managed-certificates: "cert-wfslab"
+     kubernetes.io/ingress.global-static-ip-name: "ip-gke-ingress"
+spec:
+  rules:
+  - host: homologacao.wfslab.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: reviewfilmes
+            port: 
+              number: 80
+  - host: www.homologacao.wfslab.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: reviewfilmes
+            port: 
+              number: 80

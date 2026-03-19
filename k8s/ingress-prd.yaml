@@ -1,0 +1,43 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: cert-wfslab
+  namespace: producao
+spec:
+  domains:
+    - wfslab.com.br
+    - www.wfslab.com.br
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reviewfilmes
+  namespace: producao
+  labels:
+    name: reviewfilmes
+  annotations:
+     kubernetes.io/ingress.class: "gce"
+     networking.gke.io/managed-certificates: "cert-wfslab"
+     kubernetes.io/ingress.global-static-ip-name: "ip-gke-ingress-prd"
+spec:
+  rules:
+  - host: wfslab.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: reviewfilmes
+            port: 
+              number: 80
+  - host: www.wfslab.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: reviewfilmes
+            port: 
+              number: 80
